@@ -1,0 +1,44 @@
+import React, { useContext, useState, useEffect } from 'react';
+import { View } from 'react-native';
+import { Searchbar } from 'react-native-paper';
+import styled from 'styled-components/native';
+
+import { LocationContext } from '../../../services/location/location.context';
+
+const SearchContainer = styled(View)`
+  padding: ${(props) => props.theme.space[3]};
+`;
+
+export const Search = ({ isFavoritesToggled, onFavoritesToggle }) => {
+  const { keyword, search } = useContext(LocationContext);
+  const [searchKeyword, setSearchKeyword] = useState(keyword);
+
+  useEffect(() => {
+    setSearchKeyword(keyword);
+  }, [keyword]);
+
+  const submitSearch = () => {
+    if (!searchKeyword.length) {
+      return;
+    }
+
+    search(searchKeyword);
+  };
+
+  const onChangeSearch = (text) => {
+    setSearchKeyword(text);
+  };
+
+  return (
+    <SearchContainer>
+      <Searchbar
+        icon={isFavoritesToggled ? 'heart' : 'heart-outline'}
+        onIconPress={onFavoritesToggle}
+        placeholder="Search for a location"
+        value={searchKeyword}
+        onSubmitEditing={submitSearch}
+        onChangeText={onChangeSearch}
+      />
+    </SearchContainer>
+  );
+};
