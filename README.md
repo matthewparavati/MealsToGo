@@ -1,1 +1,1 @@
-Complete React Native in 2021 course with MealsToGo app.
+MealsToGo app from Complete React Native in 2021 course
